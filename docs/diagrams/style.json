@@ -1,6 +1,7 @@
 {
   "preset": "clean",
   "theme": "light",
+  "radius": 0,
   "palette": {
     "the game": {
       "accent": "#c2410c"

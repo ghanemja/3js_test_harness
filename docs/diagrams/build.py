@@ -25,6 +25,7 @@ for spec in sorted(HERE.glob("*.json")):
     svg = render_svg(g, replace(base, show_params=False))
     # modelviz heads every diagram "N layers · N params" (it's built for neural nets) — not meaningful here
     svg = re.sub(r'<text[^>]*>\d+ layers · [^<]* params</text>', '', svg)
+    svg = svg.replace('rx="5"', 'rx="0"')         # square legend swatches too (the cards follow style.json's radius)
     out = spec.with_suffix(".svg")
     out.write_text(svg)
     print("wrote", out.relative_to(HERE.parents[1]))
