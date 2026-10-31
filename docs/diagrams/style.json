@@ -1,0 +1,36 @@
+{
+  "preset": "clean",
+  "theme": "light",
+  "palette": {
+    "the game": {
+      "accent": "#c2410c"
+    },
+    "harness": {
+      "accent": "#1d4ed8"
+    },
+    "browser": {
+      "accent": "#7c3aed"
+    },
+    "suite": {
+      "accent": "#047857"
+    },
+    "result": {
+      "accent": "#334155"
+    },
+    "setup": {
+      "accent": "#7c3aed"
+    },
+    "act 1": {
+      "accent": "#1d4ed8"
+    },
+    "acts 2–4": {
+      "accent": "#c2410c"
+    },
+    "ending": {
+      "accent": "#047857"
+    },
+    "*": {
+      "accent": "#475569"
+    }
+  }
+}

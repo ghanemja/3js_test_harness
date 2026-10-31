@@ -1,0 +1,15 @@
+{
+  "name": "How the harness runs the game",
+  "layers": [
+    {"name": "game",    "type": "art-heist checkout",   "kind": "the game",  "detail": "GAME_DIR · index.html + js/"},
+    {"name": "serve",   "type": "Static server",        "kind": "harness",   "detail": "tests/serve.mjs", "inputs": ["game"]},
+    {"name": "chrome",  "type": "Headless Chromium",    "kind": "browser",   "detail": "Playwright · SwiftShader GL", "inputs": ["serve"]},
+    {"name": "page",    "type": "The real game, booted","kind": "the game",  "detail": "window.__v2", "inputs": ["chrome"]},
+    {"name": "driver",  "type": "Game driver",          "kind": "harness",   "detail": "lib/game.mjs · keys, teleport, frames", "inputs": ["page"]},
+    {"name": "static",  "type": "static",               "kind": "suite",     "detail": "no browser · 2 s", "inputs": ["game"]},
+    {"name": "story",   "type": "story",                "kind": "suite",     "detail": "full playthrough", "inputs": ["driver"]},
+    {"name": "inter",   "type": "interactions",         "kind": "suite",     "detail": "every control", "inputs": ["driver"]},
+    {"name": "models",  "type": "models",               "kind": "suite",     "detail": "geometry · scale · budget", "inputs": ["driver"]},
+    {"name": "report",  "type": "Verdict",              "kind": "result",    "detail": "pass/fail · screenshots · report.json", "inputs": ["static", "story", "inter", "models"]}
+  ]
+}

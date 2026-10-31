@@ -1,0 +1,17 @@
+{
+  "name": "The story suite plays the whole case",
+  "layers": [
+    {"name": "title",   "type": "Title screen",          "kind": "setup",   "detail": "click start"},
+    {"name": "cold",    "type": "Cold open",             "kind": "setup",   "detail": "skip ›"},
+    {"name": "phone",   "type": "Phone brief",           "kind": "setup",   "detail": "reply 'on it'"},
+    {"name": "vivi",    "type": "Act 1 · Vivi",          "kind": "act 1",   "detail": "talk · can't accuse yet"},
+    {"name": "clues",   "type": "8 clues",               "kind": "act 1",   "detail": "walk up · E · card", "inputs": ["vivi"]},
+    {"name": "people",  "type": "Otto, Pia, Rex, Ezra",  "kind": "act 1",   "detail": "talk through", "inputs": ["vivi"]},
+    {"name": "accuse",  "type": "Accusations",           "kind": "act 1",   "detail": "3 refused · 1 solves", "inputs": ["clues", "people"]},
+    {"name": "getaway", "type": "Act 2 · getaway",       "kind": "acts 2–4","detail": "Cape Far Side card"},
+    {"name": "count",   "type": "Act 3 · countdown",     "kind": "acts 2–4","detail": "Rex at the cape · timer runs"},
+    {"name": "abort",   "type": "Act 4 · abort",         "kind": "acts 2–4","detail": "E at the console · police"},
+    {"name": "epi",     "type": "Epilogue",              "kind": "ending",  "detail": "three shots"},
+    {"name": "end",     "type": "Case closed",           "kind": "ending",  "detail": "free play · no errors"}
+  ]
+}

@@ -4,6 +4,26 @@ Regression tests for [ghanemja/art-heist](https://github.com/ghanemja/art-heist)
 Chromium and play it the way a person would (keys, clicks, walking up to things), so a
 change that breaks the story, a control or a model fails here before it reaches `main`.
 
+How it's put together, and why it's built this way (with references to ISTQB game testing,
+ISO/IEC/IEEE 29119 and published studio practice): [`METHODOLOGY.md`](METHODOLOGY.md).
+
+## How it works
+
+![How the harness runs the game](docs/diagrams/architecture.svg)
+
+The harness serves your game checkout, boots it in a headless browser, and drives it through
+`lib/game.mjs` — the same keys and clicks a player uses, plus a few shortcuts (standing the critic
+next to a clue instead of walking there). The **static** suite skips the browser entirely and reads
+the source. Every suite ends in one verdict: pass/fail, screenshots, and a JSON report of what it measured.
+
+![The story suite plays the whole case](docs/diagrams/playthrough.svg)
+
+The **story** suite is one continuous playthrough, in order — each act only starts if the one before
+it really advanced the game, so a break shows up at the exact step that stopped working.
+
+Diagrams are drawn with [modelviz](https://github.com/ghanemja/visme) from the specs in
+`docs/diagrams/*.json`; redraw with `python3 docs/diagrams/build.py` (visme checked out next to this repo).
+
 ## Setup
 
 Check this repo out **next to** the game (or point `GAME_DIR` at it):
@@ -24,7 +44,7 @@ The harness serves the game folder itself (a tiny static server), so whatever is
 ## Running
 
 ```bash
-node tests/run.mjs                 # everything (~8 min: the browser renders in software)
+node tests/run.mjs                 # everything (~6–8 min: the browser renders in software)
 node tests/run.mjs static          # no-browser checks only (seconds) — run on every edit
 node tests/run.mjs story           # one suite (static | story | interactions | models)
 node --test tests/story.test.mjs   # same thing, plain node:test
