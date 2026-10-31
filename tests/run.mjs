@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const DIR = fileURLToPath(new URL('.', import.meta.url));
-const ALL = ['static', 'story', 'interactions', 'models'];
+const ALL = ['static', 'story', 'interactions', 'models', 'rules', 'rigs'];
 const pick = process.argv.slice(2).filter((a) => !a.startsWith('-'));
 const suites = pick.length ? pick : ALL;
 const unknown = suites.filter((s) => !ALL.includes(s));

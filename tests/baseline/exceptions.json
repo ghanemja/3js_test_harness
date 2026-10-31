@@ -1,0 +1,331 @@
+{
+  "floating": [
+    {
+      "key": "39.5,10,23",
+      "why": "the museum group: stands on its own levelled plane; its lowest corner hangs over the plane edge (checked in a screenshot)",
+      "seen": {
+        "at": [
+          39.61567352156774,
+          9.906045887960623,
+          22.99885908867439
+        ],
+        "gap": "nothing below",
+        "size": 40.1,
+        "near": "museum-plaza"
+      }
+    },
+    {
+      "key": "42.5,9,8",
+      "why": "Main Street bunting — strung between buildings, meant to hang in the air",
+      "seen": {
+        "at": [
+          42.46235466003418,
+          9.134836673736572,
+          7.796261548995972
+        ],
+        "gap": 3.035,
+        "size": 6.1,
+        "near": ""
+      }
+    },
+    {
+      "key": "43,9,-2",
+      "why": "Main Street bunting",
+      "seen": {
+        "at": [
+          43.02659225463867,
+          9.111679315567017,
+          -1.8190999031066895
+        ],
+        "gap": 3.039,
+        "size": 6.1,
+        "near": ""
+      }
+    },
+    {
+      "key": "42,9,11",
+      "why": "Main Street bunting",
+      "seen": {
+        "at": [
+          41.87665367126465,
+          9.054080963134766,
+          10.75059461593628
+        ],
+        "gap": 3.037,
+        "size": 6,
+        "near": "museum-plaza"
+      }
+    },
+    {
+      "key": "43,9,-5",
+      "why": "Main Street bunting",
+      "seen": {
+        "at": [
+          42.81346130371094,
+          9.021764516830444,
+          -4.824629545211792
+        ],
+        "gap": 3.041,
+        "size": 6,
+        "near": ""
+      }
+    },
+    {
+      "key": "43,9,1",
+      "why": "Main Street bunting",
+      "seen": {
+        "at": [
+          43.0551700592041,
+          9.163344860076904,
+          1.2488086223602295
+        ],
+        "gap": 3.037,
+        "size": 6.1,
+        "near": ""
+      }
+    },
+    {
+      "key": "43,9,5",
+      "why": "Main Street bunting",
+      "seen": {
+        "at": [
+          42.85267639160156,
+          9.17263913154602,
+          4.7647199630737305
+        ],
+        "gap": 3.035,
+        "size": 6.1,
+        "near": ""
+      }
+    },
+    {
+      "key": "10.5,-9,40.5",
+      "why": "OPEN — DeckGPT shop: ~0.11 gap under its lowest edge; looks fine from a distance, check the base up close (FL: flat slabs lift at the ends on a radius-40 planet)",
+      "seen": {
+        "at": [
+          10.593666558779791,
+          -8.7931050981594,
+          40.63100862095237
+        ],
+        "gap": 0.115,
+        "size": 13.3,
+        "near": "lm:deckgpt"
+      }
+    },
+    {
+      "key": "-14,12,-38.5",
+      "why": "OPEN — Splatform shop: ~0.11 gap under its lowest edge; check up close",
+      "seen": {
+        "at": [
+          -14.036378926940518,
+          11.81674508972488,
+          -38.68895827255955
+        ],
+        "gap": 0.113,
+        "size": 13.1,
+        "near": "lm:splatform"
+      }
+    },
+    {
+      "key": "18.5,-9,-37.5",
+      "why": "OPEN — QR Compass shop: ~0.12 gap under its lowest edge; check up close",
+      "seen": {
+        "at": [
+          18.371731289479357,
+          -8.908049864641757,
+          -37.66763123928208
+        ],
+        "gap": 0.121,
+        "size": 13.2,
+        "near": "lm:qr"
+      }
+    },
+    {
+      "key": "38.5,-12,4",
+      "why": "the harbour pier/quay: built out over the water",
+      "seen": {
+        "at": [
+          38.60251710231617,
+          -12.247310400202785,
+          4.159708492380538
+        ],
+        "gap": "nothing below",
+        "size": 15,
+        "near": "harbour-quay"
+      }
+    },
+    {
+      "key": "-38,-6.5,-20",
+      "why": "the cargo rocket: set 0.16 up onto its pad on purpose (capeAttach lift)",
+      "seen": {
+        "at": [
+          -37.80753461650383,
+          -6.25249544049427,
+          -19.784688452249817
+        ],
+        "gap": 0.109,
+        "size": 7.1,
+        "near": "site:launchpad"
+      }
+    },
+    {
+      "key": "-34,-8.5,-22.5",
+      "why": "the launch console: sits on the grass in a level screenshot; the measurement misreads the cape ground here",
+      "seen": {
+        "at": [
+          -33.80128732183783,
+          -8.689903605062279,
+          -22.47377504866504
+        ],
+        "gap": 0.865,
+        "size": 1.3,
+        "near": "site:launchpad"
+      }
+    },
+    {
+      "key": "16,30.5,8",
+      "why": "a water surface (river/pond) over its bed",
+      "seen": {
+        "at": [
+          15.80551001572623,
+          30.72845177263754,
+          8.191753285308357
+        ],
+        "gap": "nothing below",
+        "size": 41.7,
+        "near": "museum"
+      }
+    },
+    {
+      "key": "15.5,31,8",
+      "why": "a water surface (river/pond) over its bed",
+      "seen": {
+        "at": [
+          15.634242044517608,
+          30.862108752371242,
+          8.231982518102772
+        ],
+        "gap": "nothing below",
+        "size": 40.4,
+        "near": "north:close"
+      }
+    }
+  ],
+  "feet-off-ground": [
+    {
+      "key": "citizen:ada",
+      "why": "CHECK — one skinned part of her model (714 verts + its ink) reads 0.39 below the ground when skinned on the CPU, but she stands on the grass in a close-up; likely the load-time trimming of skin under clothes (FL:277). If her coat hem ever shows sunk on screen, this is it.",
+      "seen": {
+        "who": "citizen:ada",
+        "gaps": [
+          -0.42,
+          -0.394,
+          -0.361
+        ]
+      }
+    }
+  ],
+  "road-through-zone": [
+    {
+      "key": "9:museum",
+      "why": "the road skirts the museum forecourt: the reserved circle is wider than the built forecourt (overhead screenshot)",
+      "seen": {
+        "road": 9,
+        "zone": "museum",
+        "samples": 7
+      }
+    },
+    {
+      "key": "26:site:overlook",
+      "why": "the Summit road ends in a turning circle at the overlook (FEATURE_LOG: \"the Summit road ends in a turning circle\")",
+      "seen": {
+        "road": 26,
+        "zone": "site:overlook",
+        "samples": 17
+      }
+    }
+  ],
+  "plant-on-road": [],
+  "story-items-clear": [
+    {
+      "key": "ezra:inside 1 solid footprint(s)",
+      "why": "Ezra sits inside the parked train carriage on purpose",
+      "seen": {
+        "id": "ezra",
+        "why": "inside 1 solid footprint(s)"
+      }
+    }
+  ],
+  "road-grade": [
+    {
+      "key": "0",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 0,
+        "grade": 0.4
+      }
+    },
+    {
+      "key": "7",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 7,
+        "grade": 0.7
+      }
+    },
+    {
+      "key": "9",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 9,
+        "grade": 0.6
+      }
+    },
+    {
+      "key": "12",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 12,
+        "grade": 0.29
+      }
+    },
+    {
+      "key": "13",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 13,
+        "grade": 0.38
+      }
+    },
+    {
+      "key": "25",
+      "why": "OPEN — steeper than the 0.19 the log reports for the west roads; recorded so it can't get steeper. Check whether it's a real slope or a bridge/ramp",
+      "seen": {
+        "road": 25,
+        "grade": 0.24
+      }
+    }
+  ],
+  "small-tap-targets": [
+    {
+      "key": "sndBtn",
+      "why": "OPEN — the sound button is 36 px tall on touch; MOBILE_REPORT aims tap targets toward 44 px",
+      "seen": {
+        "target": "sndBtn 52×36"
+      }
+    }
+  ],
+  "unlinked-ink": [
+    {
+      "key": "ruts",
+      "why": "ASSUMED — the tyre ruts are ground marks drawn without ink, like the road-coloured slabs (FL:241); confirm",
+      "seen": {
+        "id": "ruts"
+      }
+    }
+  ],
+  "bone-stretch": [],
+  "posture": [],
+  "hand-in-torso": [],
+  "gait": []
+}

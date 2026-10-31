@@ -60,6 +60,26 @@ tooling. ISO/IEC/IEEE 29119 [2] is the general software-testing standard (proces
 | Visual review artefacts | three.js e2e [7] | screenshots in `tests/output/` (reviewed by a person, not yet diffed; see §6) |
 | Responsive / platform layout | CT-GaMe [1] (platform) | phone-width layout keeps its buttons on screen |
 
+## 3b. Testing against the project's own rules
+
+Beyond generic practice, the strongest oracle a project has is its own record of what went wrong. Every
+rule in art-heist's `CLAUDE.md` / `AGENTS.md`, and every bug its `FEATURE_LOG.md` says was fixed, is a
+regression waiting to happen. About 220 checkable items were extracted ([`docs/rules-catalogue.md`](docs/rules-catalogue.md)),
+and the `rules` and `rigs` suites turn the highest-value ones into measurements on the live world:
+- **Grounding** is measured geometrically: from each object's lowest points, a ray down to whatever is beneath.
+  People are checked against the game's own ground lookup (`standAt`).
+- **Layout** reads the game's reservation map (`ZONES`) and road network (`ROADS`) directly.
+- **Gait** uses the log's own metric for its moonwalk bug: the planted foot's motion relative to the body.
+  It was ~70% forward when broken and ~25% when fixed.
+
+[`RULES.md`](RULES.md) maps each automated rule to its source and its test.
+
+**Reviewed exceptions (waivers).** A rule checker run over a real world finds things that break the rule
+on purpose. Following the usual practice for static-analysis waivers, each one is reviewed (here, in a
+screenshot) and recorded with a reason in `tests/baseline/exceptions.json`. Recorded ones pass; anything
+new fails; an exception that stops occurring is reported for pruning. Findings that aren't intended but
+aren't fixed yet are recorded as **OPEN**, so they're visible and can't get worse unnoticed.
+
 ## 4. Requirements traceability
 
 Each requirement and the test that covers it. "Requirement" means a story beat, a control, or a rule
@@ -99,6 +119,7 @@ on purpose to the game, the relevant suite run, and the change reverted:
 |---|---|---|
 | `park.js` imports a name `world.js` doesn't export | `static` | `park.js imports { notARealExport } but world.js does not export it` |
 | Solving the case no longer starts act 2 (`G.act = 2` removed) | `story` | `closing the solved notebook did not start the getaway` (and every later act fails after it) |
+| A GLB with 1110×1425 JPEG textures dropped into `models/citizens/` | `static` | `zz-test.glb: a 1110×1425 texture (max 512²)`, `a jpeg texture (should be WebP)`, `1.96 MB` |
 
 Re-run these whenever the harness itself changes. A test that still passes against a broken game
 is broken itself.
