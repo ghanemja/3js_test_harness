@@ -4,6 +4,8 @@ Regression tests for [ghanemja/art-heist](https://github.com/ghanemja/art-heist)
 Chromium and play it the way a person would (keys, clicks, walking up to things), so a
 change that breaks the story, a control or a model fails here before it reaches `main`.
 
+What it has caught so far, real bugs and planted ones kept apart: [`BUGS_FOUND.md`](BUGS_FOUND.md).
+
 How it's put together, and why it's built this way (with references to ISTQB game testing,
 ISO/IEC/IEEE 29119 and published studio practice): [`METHODOLOGY.md`](METHODOLOGY.md).
 
