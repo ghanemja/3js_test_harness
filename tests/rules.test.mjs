@@ -100,6 +100,9 @@ test('nothing floats: every object rests on something (FEATURE_LOG: floating pla
     }
     return out;
   });
+  // a failure comes with pictures: each new floater, boxed in red, in tests/output/floating-N.png
+  const fresh = X.fresh('floating', floaters, spot, nearSpot);
+  for (const [i, o] of fresh.slice(0, 5).entries()) t.diagnostic(`photo of new floater ${i}: ${await g.shotAt(`floating-${i}`, o.at, Math.min(o.size, 6))}`);
   X.judge('floating', floaters, spot, t, nearSpot);
 });
 

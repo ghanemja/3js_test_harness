@@ -9,6 +9,8 @@ ISO/IEC/IEEE 29119 and published studio practice): [`METHODOLOGY.md`](METHODOLOG
 
 ## How it works
 
+![What the harness checks — screenshots from a real run](docs/img/what-gets-tested.jpg)
+
 ![How the harness runs the game](docs/diagrams/architecture.svg)
 
 The harness serves your game checkout, boots it in a headless browser, and drives it through
@@ -21,8 +23,28 @@ the source. Every suite ends in one verdict: pass/fail, screenshots, and a JSON 
 The **story** suite is one continuous playthrough, in order — each act only starts if the one before
 it really advanced the game, so a break shows up at the exact step that stopped working.
 
+The screenshots are the harness's own (`node docs/capture-gallery.mjs`, then `node docs/build-figures.mjs`).
 Diagrams are drawn with [modelviz](https://github.com/ghanemja/visme) from the specs in
 `docs/diagrams/*.json`; redraw with `python3 docs/diagrams/build.py` (visme checked out next to this repo).
+
+## A real example: what using it looks like
+
+![A real example: two benches, two mistakes caught, then green](docs/img/worked-example.jpg)
+
+This was run for real against a scratch copy of the game: a small feature, two memorial benches at the edge of
+the museum garden, written with two mistakes that are easy to make here.
+
+1. **A new module, but the import map isn't updated.** `node tests/run.mjs static` fails in 3 seconds:
+   `modules missing from the import map: 'benches.js'`. CLAUDE.md's cache-token rule is enforced before
+   anything boots. The fix is one line in `index.html`.
+2. **The benches are placed at the garden path's height,** but the lawn drops ~0.4 past the path. It's the same
+   mistake the feature log records for the forecourt beacons. `node tests/run.mjs rules` fails *nothing floats*,
+   names both benches (`gap: 0.281, near: 'museum-garden'`), and saves a photo of each with a red box around it.
+3. **Fixed with `settle()`** (AGENTS.md: things stand on the ground under them). All 16 rules pass, and the
+   same camera shows the bench on the lawn.
+
+The point: neither mistake shows on the title screen or in a quick walk past. Both would have shipped.
+The harness named each one, said which rule it breaks, and showed where it is.
 
 ## Setup
 

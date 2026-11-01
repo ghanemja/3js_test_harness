@@ -33,8 +33,9 @@ before(async () => {
         const h = o.userData.human; if (!h?.J || (!all && !shown(o))) return;
         const it = __v2.game.items.find((i) => i.obj === o);
         const w = __v2.game.walkers.find((x) => x.obj === o);
-        const st = stanceName(h.stance);
-        out.push({ who: it ? `person:${it.id}` : w ? `walker:${w.id}` : `folk:${st}@${zone(o)}`, kind: 'folk', root: o, stance: st, seated: !!it?.seated, j: h.J });
+        const st = stanceName(h.stance), nl = __v2.northLife?.list?.find((x) => x.obj === o);
+        const doing = nl?.kind && nl.kind !== 'still' ? nl.kind : st;      // ('still' = standing about: the stance says what they're doing)
+        out.push({ who: it ? `person:${it.id}` : w ? `walker:${w.id}` : `folk:${doing}@${zone(o)}`, kind: 'folk', root: o, stance: st, doing, inst: h, seated: !!it?.seated, j: h.J });
       });
       const c = __v2.player.critic.inst;
       out.push({ who: 'critic', kind: 'critic', root: __v2.player.root, stance: 'player', j: { hips: c.bones.hips, neck: c.bones.neck, head: c.bones.head, footL: c.bones.footL, footR: c.bones.footR, handL: c.bones.handL, handR: c.bones.handR } });
@@ -141,12 +142,13 @@ test('posture: head over hips over feet, head upright (FEATURE_LOG: the swimmer\
       if (!hips || !head || !footL || !footR) return { who: p.who, problem: 'missing joints' };
       const up = W(p.root).normalize(), h = (o) => W(o).dot(up);
       const problems = [];
-      if (h(head) - h(hips) < 0.2) problems.push(`head only ${(h(head) - h(hips)).toFixed(2)} above the hips`);
-      if (!p.seated && Math.max(h(footL), h(footR)) > h(hips) - 0.15) problems.push('a foot level with the hips');
+      // (a swimmer lies along the water: her head is in front of her hips, not over them — her own test below)
+      if (p.doing !== 'swim' && h(head) - h(hips) < 0.2) problems.push(`head only ${(h(head) - h(hips)).toFixed(2)} above the hips`);
+      if (!p.seated && p.doing !== 'swim' && Math.max(h(footL), h(footR)) > h(hips) - 0.15) problems.push('a foot level with the hips');
       // the head's own up: folk heads are built +Y up; a GLB rig's head points along neck → head
       const hu = p.kind === 'folk' ? new THREE.Vector3(0, 1, 0).applyQuaternion(head.getWorldQuaternion(new THREE.Quaternion())) : W(head).sub(W(neck ?? hips)).normalize();
       const tilt = Math.acos(Math.min(1, Math.max(-1, hu.dot(up)))) * 180 / Math.PI;
-      if (tilt > 55) problems.push(`head tilted ${tilt.toFixed(0)}°`);
+      if (tilt > 55 && p.stance !== 'golf') problems.push(`head tilted ${tilt.toFixed(0)}°`);   // (a golfer looks down at his ball)
       seenPeople.push(`${p.who} ${tilt.toFixed(0)}°`);
       return problems.length ? { who: p.who, problem: problems.join('; ') } : null;
     }).then((out) => ({ out, seenPeople }));
@@ -173,13 +175,74 @@ test('hands stay outside the torso (AGENTS.md 5: "no part of an arm or hand may 
   X.judge('hand-in-torso', bad, (o) => `${o.who}:${o.hand}`, t);
 });
 
-test('a club is held in both hands (FEATURE_LOG: "same with the golfing")', async () => {
-  const r = await g.eval(() => {
-    const { W, tour } = __G;
-    return tour((p) => ({ who: p.who, apart: p.j.gripL && p.j.gripR ? +W(p.j.gripL).distanceTo(W(p.j.gripR)).toFixed(3) : null }), (p) => p.stance === 'golf');
+// ── the club's swimmer and golfer (user report 2026-10-31: "something is wrong with the swimming", "same with
+// the golfing"). Root causes, fixed in art-heist 5ff921b: the swimmer was a standing person in the walk pose
+// sunk to her chest; the golfer floated ~0.09 over the mat, held the club in one wrist, and never swung.
+
+test('the swimmer swims: lying along the water, head up, moving down the pool, no shadow on the water', async (t) => {
+  const r = await g.eval(async () => {
+    const { THREE, W, tour, frame, world } = __G;
+    return tour(async (p) => {
+      const S = []; let swum = 0, last = W(p.root);
+      for (let n = 0; n < 160; n++) {
+        await frame();
+        p.root.updateWorldMatrix(true, true);
+        const up = W(p.root).normalize(), body = W(p.j.neck).sub(W(p.j.hips)).normalize();
+        const head = new THREE.Vector3(0, 1, 0).applyQuaternion(p.j.head.getWorldQuaternion(new THREE.Quaternion()));
+        const now = W(p.root); swum += now.distanceTo(last); last = now;
+        S.push({ lean: Math.acos(Math.min(1, Math.abs(body.dot(up)))) * 180 / Math.PI, headTilt: Math.acos(Math.min(1, head.dot(up))) * 180 / Math.PI });
+      }
+      const shadow = p.root.children.filter((c) => c.isMesh && c.material?.isMeshBasicMaterial && c.visible).length;
+      const lying = S.filter((x) => x.lean > 50).length / S.length;
+      return { who: p.who, lying: +lying.toFixed(2), worstHead: Math.round(Math.max(...S.map((x) => x.headTilt))), moved: +swum.toFixed(2), shadow };
+    }, (p) => p.doing === 'swim' || (!__v2.northLife && p.who.includes('@north:club') && W(p.root).length() < world.standAt(W(p.root).normalize()) - 0.3));   // (older builds: the one standing in the pool)
+  });
+  assert.ok(r.length, 'no swimmer found');
+  t.diagnostic(JSON.stringify(r));
+  for (const o of r) {
+    assert.ok(o.lying > 0.8, `${o.who}: body upright in ${Math.round((1 - o.lying) * 100)}% of frames — standing in the pool, not swimming`);
+    assert.ok(o.worstHead < 50, `${o.who}: head tips ${o.worstHead}° — it should stay up out of the water`);
+    assert.ok(o.moved > 0.1, `${o.who}: frozen in the pool (swam ${o.moved} in ~3 s; the pool is ~1 unit long and breaststroke glides)`);
+    assert.equal(o.shadow, 0, `${o.who}: a blob shadow drawn on the water`);
+  }
+});
+
+test('the golfer golfs: on the mat, both fists on the grip, a full swing that meets the ball', async (t) => {
+  const r = await g.eval(async () => {
+    const { THREE, W, tour, frame, world } = __G;
+    return tour(async (p) => {
+      const G = p.inst.golf;                                                     // (the club rig: club, head, ball)
+      const out = { who: p.who, rig: !!G, apart: 0, feet: [], headToBall: 9, top: -9 };
+      const t0 = p.inst.gt ?? 0, T0 = performance.now();
+      // one whole 7.2 s loop of the swing (or ~8 s of game time when there's no swing clock to watch)
+      for (let n = 0; n < 1500 && (G ? (p.inst.gt ?? 0) - t0 < 7.6 : n < 400); n++) {
+        await frame();
+        p.root.updateWorldMatrix(true, true);
+        const up = W(p.root).normalize(), hips = W(p.j.hips).dot(up);
+        out.apart = Math.max(out.apart, W(p.j.gripL).distanceTo(W(p.j.gripR)));
+        for (const f of [p.j.footL, p.j.footR]) { const q = W(f); out.feet.push(q.length() - world.standAt(q.clone().normalize())); }
+        if (G) {
+          const h = W(G.head);
+          if (G.ball.visible) out.headToBall = Math.min(out.headToBall, h.distanceTo(W(G.ball)));
+          out.top = Math.max(out.top, h.dot(up) - hips);
+        }
+      }
+      out.looped = G ? +((p.inst.gt ?? 0) - t0).toFixed(1) : null;
+      out.feetLo = +Math.min(...out.feet).toFixed(3); out.feetHi = +Math.max(...out.feet).toFixed(3); delete out.feet;
+      for (const k of ['apart', 'headToBall', 'top']) out[k] = +out[k].toFixed(3);
+      return out;
+    }, (p) => p.stance === 'golf');
   });
   assert.ok(r.length, 'no golfer found (stance "golf")');
-  for (const o of r) assert.ok(o.apart != null && o.apart < 0.15, `${o.who}: hands ${o.apart} apart — not both on the club`);
+  t.diagnostic(JSON.stringify(r));
+  for (const o of r) {
+    assert.ok(o.apart < 0.12, `${o.who}: fists up to ${o.apart} apart — not both on the grip`);
+    assert.ok(o.feetLo > -0.05 && o.feetLo < 0.11, `${o.who}: his ankles never come lower than ${o.feetLo} over the mat — standing in the air (the old bug: ~0.09 up)`);
+    assert.ok(o.rig, `${o.who}: no club rig to swing (inst.golf: club, head, ball)`);
+    assert.ok(o.looped >= 7, `${o.who}: the swing didn't run (${o.looped} s of it seen)`);
+    assert.ok(o.headToBall < 0.08, `${o.who}: the club head never reaches the ball (closest ${o.headToBall})`);
+    assert.ok(o.top > 0.2, `${o.who}: the club never rises above the hips — no backswing (${o.top})`);
+  }
 });
 
 // ── gait ──────────────────────────────────────────────────────────────────────

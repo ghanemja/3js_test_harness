@@ -24,6 +24,11 @@ export function exceptionsFor() {
       if (gone.length) t?.diagnostic(`${rule}: ${gone.length} listed exception(s) no longer occur — prune them: ${gone.map((k) => k.key).join(', ')}`);
       assert.deepEqual(fresh, [], `${rule}: new offenders (fix them, or if intended add them to tests/baseline/exceptions.json with a reason)`);
     },
+    /** the offenders that aren't listed exceptions (to photograph them before the rule fails) */
+    fresh(rule, offenders, keyOf, match = (o, k) => keyOf(o) === k.key) {
+      if (UPDATE) return [];
+      return offenders.filter((o) => !(all[rule] ?? []).some((k) => match(o, k)));
+    },
     /** write back (UPDATE only): rules this suite judged are replaced, other suites' rules kept as they were */
     save() {
       if (!UPDATE) return;

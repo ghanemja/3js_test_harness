@@ -119,6 +119,8 @@ on purpose to the game, the relevant suite run, and the change reverted:
 |---|---|---|
 | `park.js` imports a name `world.js` doesn't export | `static` | `park.js imports { notARealExport } but world.js does not export it` |
 | Solving the case no longer starts act 2 (`G.act = 2` removed) | `story` | `closing the solved notebook did not start the getaway` (and every later act fails after it) |
+| The club's swimmer and golfer **before** their fix (art-heist 4e5a4e7). The new tests pass on the fixed build (5ff921b). | `rigs` | swimmer: `body upright in 100% of frames — standing in the pool, not swimming`; golfer: `fists up to 0.141 apart — not both on the grip` (and his ankles ≥ 0.126 over the mat, against 0.034 fixed) |
+| A new module left out of the import map; benches placed at the path's height over a falling lawn (the README's worked example) | `static`, then `rules` | `modules missing from the import map: 'benches.js'`; then `nothing floats` names both benches (gap 0.28) with photos |
 | A GLB with 1110×1425 JPEG textures dropped into `models/citizens/` | `static` | `zz-test.glb: a 1110×1425 texture (max 512²)`, `a jpeg texture (should be WebP)`, `1.96 MB` |
 
 Re-run these whenever the harness itself changes. A test that still passes against a broken game

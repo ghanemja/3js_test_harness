@@ -42,7 +42,8 @@ green, and so they can't quietly get worse.
 | 80 | bones keep their length (no stretched limbs) | AGENTS.md 4 | `rigs` bones keep their length |
 | 81 | hands outside the torso | AGENTS.md 5 | `rigs` hands stay outside the torso |
 | — | head over hips over feet, head upright | FL: the swimmer | `rigs` posture |
-| 83 | a held club in both hands | FL: the golfer | `rigs` a club is held in both hands |
+| — | the swimmer swims: lying along the water, head up, moving, no shadow on the water | user report 2026-10-31 ("something is wrong with the swimming"), fixed in art-heist 5ff921b | `rigs` the swimmer swims |
+| 83 | the golfer golfs: on the mat, both fists on the grip, a full swing that meets the ball | user report 2026-10-31 ("same with the golfing"), fixed in 5ff921b | `rigs` the golfer golfs |
 | 90–91 | gait: feet alternate, no moonwalk (planted foot forward vs the body), legs front-to-back, feet at the ground | FL: moonwalk ~70% → ~25%; legs splayed sideways | `rigs` the critic walks / runs, townsfolk walk |
 
 ## Art style: `rules` suite

@@ -223,6 +223,27 @@
           -0.361
         ]
       }
+    },
+    {
+      "key": "citizen:teo (cyclist)",
+      "why": "a cyclist: feet on the pedals, not the ground (only flagged when the bike is measured apart from the rider)",
+      "seen": {
+        "who": "citizen:teo (cyclist)"
+      }
+    },
+    {
+      "key": "citizen:zara (cyclist)",
+      "why": "a cyclist: feet on the pedals, not the ground (only flagged when the bike is measured apart from the rider)",
+      "seen": {
+        "who": "citizen:zara (cyclist)"
+      }
+    },
+    {
+      "key": "citizen:dev (cyclist)",
+      "why": "a cyclist: feet on the pedals, not the ground (only flagged when the bike is measured apart from the rider)",
+      "seen": {
+        "who": "citizen:dev (cyclist)"
+      }
     }
   ],
   "road-through-zone": [

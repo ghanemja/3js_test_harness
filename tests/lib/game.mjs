@@ -105,6 +105,32 @@ export async function bootGame({ query = '', width = 960, height = 540, timeout 
       if (noUI) await page.evaluate(() => document.getElementById('__noui')?.remove());
       return path;
     },
+    /** photograph a spot in the world (at: [x,y,z], size: how big the thing is), boxed in red — for a failing rule */
+    shotAt: async (name, at, size = 2) => {
+      await page.evaluate(({ at, size }) => {
+        const { THREE, world } = __T, c = new THREE.Vector3(...at), up = c.clone().normalize();
+        const base = up.clone().multiplyScalar(world.standAt(up));
+        // a step back at about knee height, aimed at the thing's base so a gap under it shows — from
+        // whichever side the ground is lowest (looking up from downhill, a gap shows against the sky)
+        const d = Math.min(Math.max(size * 2.2, 3.5), 30), h = Math.min(0.35 + size * 0.15, 6);
+        const a0 = new THREE.Vector3().crossVectors(up, new THREE.Vector3(0.2, 0.3, 1)).normalize(), b0 = new THREE.Vector3().crossVectors(up, a0);
+        let side = a0, lowest = Infinity;
+        for (let k = 0; k < 8; k++) {
+          const dir = a0.clone().multiplyScalar(Math.cos(k * Math.PI / 4)).addScaledVector(b0, Math.sin(k * Math.PI / 4));
+          const at = base.clone().addScaledVector(dir, d).normalize(), gh = world.standAt(at);
+          if (gh < lowest) { lowest = gh; side = dir; }
+        }
+        const ground = base.clone();
+        const box = new THREE.Box3Helper(new THREE.Box3().setFromCenterAndSize(c, new THREE.Vector3(size, size, size).multiplyScalar(0.55)), 0xff2020);
+        box.userData.__mark = true; __v2.scene.add(box);
+        __T.__prevHook = __v2.player.st.camHook;
+        __v2.player.st.camHook = (cam) => { cam.position.copy(ground).addScaledVector(side, d).addScaledVector(up, h); cam.up.copy(up); cam.lookAt(c.clone().lerp(ground, 0.5)); };
+      }, { at, size });
+      await g.frames(2);
+      const path = await g.shot(name, { noUI: true });
+      await page.evaluate(() => { for (const o of [...__v2.scene.children]) if (o.userData.__mark) __v2.scene.remove(o); __v2.player.st.camHook = __T.__prevHook ?? null; });
+      return path;
+    },
     /** title → cold open (skipped) → phone texts → playing */
     startPlay: async () => {
       await g.click('#start');
