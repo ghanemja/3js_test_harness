@@ -120,3 +120,8 @@ logic, AI and timers keep running at full speed.
 Does it *look* right (the ink, the hand-drawn feel, faces up close — see AGENTS.md rule 12),
 does it *feel* right (camera, pacing), and real-device performance. The screenshots in
 `tests/output/` are there to make that look quick.
+
+## License
+
+[MIT](LICENSE) — take it and adapt it to your own 3D world. The screenshots in `docs/` show
+*The Vanishing Gallery*, whose art and assets are covered by [that game's own license](https://github.com/ghanemja/art-heist/blob/main/LICENSE).

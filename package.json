@@ -1,6 +1,7 @@
 {
   "name": "3js-test-harness",
   "private": true,
+  "license": "MIT",
   "description": "Regression tests for The Vanishing Gallery (ghanemja/art-heist): story, interactions, models, static checks",
   "type": "module",
   "engines": { "node": ">=20" },
