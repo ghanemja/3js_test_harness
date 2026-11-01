@@ -1,6 +1,6 @@
-My 3D world is getting more and more complicated. Between the storylines, animations, mini-games and more, it got too large for me to test on my own.
-
 How do you catch bugs automatically, with no AI agent in the loop?
+
+My 3D world is getting more and more complicated. Between the storylines, animations, mini-games and more, it got too large for me to test on my own.
 
 The Vanishing Gallery is a hand-drawn art-heist game on a tiny 3D planet (three.js). Every push deploys straight to the web, bugs included. My notes held ~220 rules ("nothing floats", "feet on the ground", "no moonwalking") that nothing was checking.
 
